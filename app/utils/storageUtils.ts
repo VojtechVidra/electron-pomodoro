@@ -15,9 +15,9 @@ export const saveToLocalStorage = (key: string, data: any) => {
 export const loadFromLocalStorage = (key: string): any => {
   try {
     const item = window.localStorage.getItem(key);
-    return item ? deserialize(item) : null;
+    return item ? deserialize(item) : undefined;
   } catch (error) {
     console.log(error);
-    return null;
+    return undefined;
   }
 };

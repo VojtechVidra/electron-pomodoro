@@ -1,22 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Typography, Grid, Slider, Input } from '@material-ui/core';
 import VolumeUp from '@material-ui/icons/VolumeUp';
+import { useDebouncedCallback } from 'use-debounce';
 
 interface Props {
   value: number;
   onChange: (value: number) => void;
 }
 
-export const TimeSlider = ({ onChange, value }: Props) => {
+export const TimeSlider = ({ onChange, value: initialValue }: Props) => {
   const { t } = useTranslation();
+  const [value, setValue] = useState<number>(initialValue);
+
+  const [debouncedOnChange] = useDebouncedCallback(onChange, 300);
+  const handleChange = (v: number) => {
+    setValue(v);
+    debouncedOnChange(v);
+  };
 
   const handleSliderChange = (_e, v: number | number[]) => {
-    onChange(v as number);
+    handleChange(v as number);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e.target.value === '' ? 0 : Number(e.target.value));
+    handleChange(e.target.value === '' ? 0 : Number(e.target.value));
   };
 
   return (

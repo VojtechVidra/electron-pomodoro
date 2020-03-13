@@ -1,4 +1,3 @@
-import { Moment } from 'moment';
 import {
   START_TIMER,
   StartAction,
@@ -8,7 +7,7 @@ import {
 
 type Actions = StartAction | CancelAction;
 
-export default function timer(state: null | Moment = null, action: Actions) {
+export default function timer(state: null | string = null, action: Actions) {
   switch (action.type) {
     case START_TIMER:
       return action.payload;

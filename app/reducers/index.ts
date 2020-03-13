@@ -1,13 +1,13 @@
 import { combineReducers } from 'redux';
 import { connectRouter } from 'connected-react-router';
 import { History } from 'history';
-import counter from './counter';
 import timer from './timer';
+import timerLength from './timerLength';
 
 export default function createRootReducer(history: History) {
   return combineReducers({
     router: connectRouter(history),
-    counter,
-    timer
+    timer,
+    timerLength
   });
 }

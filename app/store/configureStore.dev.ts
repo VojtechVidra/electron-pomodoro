@@ -1,11 +1,18 @@
-import { createStore, applyMiddleware, compose } from 'redux';
+import {
+  createStore,
+  applyMiddleware,
+  compose,
+  Middleware,
+  StoreEnhancer
+} from 'redux';
 import thunk from 'redux-thunk';
 import { createHashHistory } from 'history';
 import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers';
-import * as counterActions from '../actions/counter';
-import { counterStateType } from '../reducers/types';
+import * as timerActions from '../actions/timer';
+import * as timerLengthActions from '../actions/timerLength';
+import { RootStateType } from '../reducers/types';
 
 declare global {
   interface Window {
@@ -25,10 +32,10 @@ const history = createHashHistory();
 
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: counterStateType) => {
+const configureStore = (initialState?: RootStateType) => {
   // Redux Configuration
-  const middleware = [];
-  const enhancers = [];
+  const middleware: Middleware[] = [];
+  const enhancers: StoreEnhancer[] = [];
 
   // Thunk Middleware
   middleware.push(thunk);
@@ -50,7 +57,8 @@ const configureStore = (initialState?: counterStateType) => {
 
   // Redux DevTools Configuration
   const actionCreators = {
-    ...counterActions,
+    ...timerActions,
+    ...timerLengthActions,
     ...routerActions
   };
   // If Redux DevTools Extension is installed use it, otherwise use Redux compose
